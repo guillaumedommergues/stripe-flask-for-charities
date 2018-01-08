@@ -1,0 +1,15 @@
+.buttons a{width:50%;text-align:center;border:1px solid #1976D2;background:transparent;color:#1976D2;}
+.buttons a.active{color:#fff;background-color:#1976D2}
+.buttons a.active:hover{color:#fff;background-color:#1976D2}
+.buttons a:hover{background-color:transparent}
+
+.buttons a{font-weight:500;font-size:14px;float:left;height:34px;line-height:33px;padding:0 10px;text-transform:uppercase;}
+
+.buffer {height:20px;}
+.pay-button {width:100%;}
+.payment-box {width:50%;}
+
+.electric-btn { border:1px solid #1976D2; background-color:#1976D2; color:white;height:34px}
+.electric-btn:hover, .electric-btn:focus { border-color: #1E88E5; background-color: #1E88E5;}
+
+.payment-box { border:1px solid #1976D2;padding:10px;}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<link rel="stylesheet" media="screen" href="../static/styles.css">
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<h1>Donation page example</h1>
+
+<div class="container-fluid">
+
+
+
+
+
+<div class="container-fluid payment-box">
+<div class="container-fluid">
+<div class="monthly-subscription buttons">
+<a id="give-once" class="active">Give Once</a><a id="give-monthly" class="">Monthly</a>
+</div>
+<div class="container-fluid buffer"></div>
+<div class="container-fluid buffer"></div>
+<div class="container-fluid">Enter an amount to give</div>
+<script>
+$('.document').ready(function(){
+$('#give-once').on('click', function(){
+    $(this).addClass('active'),$('#give-monthly').removeClass('active'), $('#payment-form').attr('action', '/one_time_payment'), $('#pay_button').html('DONATE') });
+$('#give-monthly').on('click', function(){
+    $(this).addClass('active'),$('#give-once').removeClass('active'), $('#payment-form').attr('action', '/monthly_payment'), $('#pay_button').html('DONATE MONTHLY') });
+});
+
+</script>
+
+
+<form id="payment-form" action="/one_time_payment" method="POST">
+<div class="form-group">
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<div class="container-fluid buffer"></div>
+<input class="form-control" id="payment_amount" name="paymentAmount" placeholder=360>
+<div class="container-fluid buffer"></div>
+<div class="buttons"><button class="active pay-button electric-btn" id="pay_button">DONATE</button></div>
+<script>
+var handler = StripeCheckout.configure({
+  key: '{{key}}',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  token: function(token) {
+    // You can access the token ID with `token.id`.
+    // Get the token ID to your server-side code for use.
+  var $input = $('<input type=hidden name=stripeToken />').val(token.id);
+  $('form').append($input).submit();
+  var $inputEmail = $('<input type=hidden name=stripeTokenEmail />').val(token.email);
+  $('form').append($inputEmail).submit();
+
+  }
+});
+
+document.getElementById('pay_button').addEventListener('click', function(e) {
+  handler.open({
+    name: 'Your Charity Name',
+    description: 'donation',
+    amount: ($('#payment_amount').val()) ? $('#payment_amount').val()*100 : (360*100)
+  });
+  e.preventDefault();
+});
+
+
+// Close Checkout on page navigation:
+window.addEventListener('popstate', function() {
+  handler.close();
+});
+</script>
+</div>
+</form>
+
+</div>
+
+
+
+
+</div> <!-- ends the payments box -->
+</div> <!-- ends the container fluid -->
+
+  </body>
+</html>
